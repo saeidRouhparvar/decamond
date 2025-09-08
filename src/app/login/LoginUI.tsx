@@ -10,59 +10,54 @@ import { isValidIranianMobile } from '../lib/utils';
 import Button from '../components/Button';
 
 type LoginUIProps = {
-    onSubmit: () => void
-    loading:boolean
+  onSubmit: () => void
+  loading: boolean
 }
 
-const LoginUI: FC<LoginUIProps> = ({ onSubmit,loading }) => {
+const LoginUI: FC<LoginUIProps> = ({ onSubmit, loading }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<LoginForm>();   
-
-    return (
-        <div className="h-screen grid place-content-center bg-gray-50 dark:bg-gray-900 px-8">
-            <div className="rounded-4xl shadow-lg p-11 flex flex-col gap-7 bg-white lg:w-[33vw] w-full">
-                <div className="flex justify-center w-full mb-4">
-                    <Image alt="logo" src={Logo} width={80} height={80} />
-                </div>
-
-                <span className="lg:text-xl sm:text-lg font-bold text-start text-gray-800 dark:text-gray-100">
-                    برای شروع، شماره تماس خود را وارد کنید.
-                </span>
-
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-                    <div className="w-full">
-                        <Input
-                            label="شماره تماس"
-                            placeholder=".شماره تماس خود را وارد نمایید"
-                            type="tel"
-                            className="text-right placeholder:text-right"
-                            error={errors.phone?.message}
-                            {...register("phone", {
-                                required: "شماره تماس الزامی است",
-                                validate: (value) =>
-                                    isValidIranianMobile(value) || "شماره تماس معتبر نیست",
-                            })}
-                        />
-
-                    </div>
-
-                    <div className="flex items-center gap-1 whitespace-nowrap">
-                        <span>با ورود</span>
-                        <Button variant="text">قوانین و شرایط</Button>
-                        <span>استفاده را می پذیرم.</span>
-                    </div>
-
-                    <div className="w-full">
-                        <Button type="submit" loading={loading}>تایید</Button>
-                    </div>
-                </form>
-            </div>
+  return (
+    <div className="h-screen grid place-content-center bg-gray-50 px-4 sm:px-8">
+      <div className="w-full max-w-md sm:max-w-lg lg:max-w-xl rounded-3xl shadow-lg p-6 sm:p-8 md:p-11 flex flex-col gap-6 sm:gap-7 bg-white dark:bg-gray-800">
+        <div className="flex justify-center w-full mb-4">
+          <Image alt="logo" src={Logo} width={80} height={80} />
         </div>
-    )
+
+        <span className="text-base sm:text-lg md:text-xl font-bold text-start text-gray-800 dark:text-gray-100">
+          To get started, please enter your phone number.
+        </span>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 sm:gap-6">
+          <Input
+            label="Phone Number"
+            placeholder="Enter your phone number"
+            type="tel"
+            error={errors.phone?.message}
+            {...register("phone", {
+              required: "Phone number is required",
+              validate: (value) =>
+                isValidIranianMobile(value) || "Invalid phone number",
+            })}
+          />
+
+          <div className="flex flex-wrap items-center gap-1 text-sm sm:text-base">
+            <span>By continuing, I accept the</span>
+            <Button variant="text">Terms & Conditions</Button>
+            <span>.</span>
+          </div>
+
+          <Button type="submit" loading={loading} >
+            Submit
+          </Button>
+        </form>
+      </div>
+    </div>
+  )
 }
 
 export default LoginUI

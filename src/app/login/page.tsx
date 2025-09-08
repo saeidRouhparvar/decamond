@@ -4,6 +4,7 @@ import { useFetchRandomUser } from '../services/mutation/usePostLogin';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import LoginUI from './LoginUI';
+import { LoginResponseType } from '../lib/types';
 
 const Login = () => {
     const router = useRouter()
@@ -11,10 +12,11 @@ const Login = () => {
     const { mutate,  isPending } = useFetchRandomUser()
     const onSubmit = () => {
         mutate(undefined, {
-            onSuccess: (res) => {
+            onSuccess: (res:LoginResponseType) => {
+                const name = `${res?.results?.[0]?.name?.title}. ${res?.results?.[0]?.name?.first} ${res?.results?.[0]?.name?.last}`
                 localStorage.setItem('userData', JSON.stringify(res))
                 router.replace('/dashboard')
-                toast.success('با موفقیت وارد شدید.')
+                toast.success(`Welcome ${name}`)
             }
         });
 
