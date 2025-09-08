@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
+import Splash from './splash/page';
 
 const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+  return <Splash />;
+};
 
-export default Home
+export default Home;
