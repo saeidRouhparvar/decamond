@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
-import Avatar from './Avatar'
+import { Avatar } from './ui'
+
 type UserDataProps = {
     picture: string
     alt: string

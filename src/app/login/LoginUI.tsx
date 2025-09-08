@@ -3,11 +3,10 @@
 import Image from 'next/image'
 import React, { FC } from 'react'
 import Logo from '../../../public/logo.png';
-import Input from '../components/Input';
 import { LoginForm } from '../lib/types';
 import { useForm } from 'react-hook-form';
 import { isValidIranianMobile } from '../lib/utils';
-import Button from '../components/Button';
+import { Button, Input } from '../components/ui';
 
 type LoginUIProps = {
   onSubmit: () => void
