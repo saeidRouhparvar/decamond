@@ -12,7 +12,7 @@ const Input: FC<InputProps> = ({ label, error, className = '', ...rest }) => {
     text-violet-700 border-neutral-400 placeholder:text-neutral-600
     focus:outline-none disabled:bg-neutral-100 disabled:cursor-not-allowed disabled:border-0
     text-sm sm:text-base md:text-lg lg:text-xl
-    sm:h-10 md:h-12 lg:h-14
+    sm:h-12 md:h-14 lg:h-14
     w-full
   `;
 
