@@ -12,7 +12,7 @@ type GlobalProviderProps = {
 
 export const GlobalProvider: FC<GlobalProviderProps> = ({ children }) => {
   const pathname = usePathname();
-  const isLoginPage = pathname === "/login";
+  const isLoginPage = pathname === "/login" || pathname === "/splash";
 
   const [queryClient] = React.useState(() => new QueryClient());
 
