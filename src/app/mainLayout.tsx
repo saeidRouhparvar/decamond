@@ -71,21 +71,12 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
                         {burger}
                     </div>
 
-                    {parsedUserData ? (
-                        <UserData
-                            name={userName}
-                            alt={userAlt}
-                            picture={userPicture}
-                            email={userEmail}
-                        />
-                    ) : (
-                        <UserData
-                            name=""
-                            alt=""
-                            picture="/avatar.png"
-                            email=""
-                        />
-                    )}
+                    <UserData
+                        name={userName || ''}
+                        alt={userAlt || ''}
+                        picture={userPicture}
+                        email={userEmail || ''}
+                    />
 
                 </div>
 

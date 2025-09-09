@@ -8,7 +8,7 @@ type UserDataProps = {
     name: string
 }
 
-const UserData: FC<UserDataProps> = ({ picture, alt, email, name }) => {
+const UserData: FC<UserDataProps> = ({ picture = '/avatar.png', alt, email, name }) => {
     return (
         <div className='flex items-center gap-2 sm:gap-1 md:gap-3'>
             <Avatar src={picture} alt={alt} />
