@@ -64,17 +64,14 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
                         {burger}
                     </div>
 
-                    <UserData
-                        name={
-                            parsedUserData
-                                ? `${parsedUserData.results[0]?.name.title || ''}. ${parsedUserData.results[0]?.name.first || ''} ${parsedUserData.results[0]?.name.last || ''}`
-                                : ''
-                        }
-                        alt={parsedUserData ? parsedUserData.results[0]?.name.first || '' : ''}
-                        picture={parsedUserData?.results[0]?.picture?.medium || ''}
-                        email={parsedUserData?.results[0]?.email || ''}
-                    />
-
+                    {parsedUserData && (
+                        <UserData
+                            name={`${parsedUserData.results[0]?.name.title || ''}. ${parsedUserData.results[0]?.name.first || ''} ${parsedUserData.results[0]?.name.last || ''}`}
+                            alt={parsedUserData.results[0]?.name.first || ''}
+                            picture={parsedUserData.results[0]?.picture?.medium || '/default-avatar.png'}
+                            email={parsedUserData.results[0]?.email || ''}
+                        />
+                    )}
 
                 </div>
 
