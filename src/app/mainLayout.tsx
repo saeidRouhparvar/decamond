@@ -8,19 +8,28 @@ import Modal from './components/Modal'
 import { Button } from './components/ui'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import { LoginResponseType } from './lib/types'
 
 type MainLayoutProps = PropsWithChildren
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [closeModal, setCloseModal] = useState(false)
-
     const router = useRouter()
 
-    const userData = localStorage.getItem('userData')
-    const parsedUserData = JSON.parse(`${userData}`)
-    const userInfo = parsedUserData?.results?.[0]
-    const userName = `${userInfo?.name?.title || ''}. ${userInfo?.name?.first || ''} ${userInfo?.name?.last || ''}`
+    const [parsedUserData, setParsedUserData] = useState<LoginResponseType | null>(null);
+
+    useEffect(() => {
+        const data = localStorage.getItem('userData')
+        if (data) {
+            setParsedUserData(JSON.parse(data) as LoginResponseType)
+        } else {
+            router.replace('/login')
+            toast.error('Your Authentication is failed!!')
+        }
+    }, [router])
+
+
 
     const closeHandler = () => {
         localStorage.removeItem('userData')
@@ -56,11 +65,17 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
                     </div>
 
                     <UserData
-                        name={userName}
-                        alt={userName}
-                        picture={userInfo?.picture?.medium}
-                        email={userInfo?.email}
+                        name={
+                            parsedUserData
+                                ? `${parsedUserData.results[0]?.name.title || ''}. ${parsedUserData.results[0]?.name.first || ''} ${parsedUserData.results[0]?.name.last || ''}`
+                                : ''
+                        }
+                        alt={parsedUserData ? parsedUserData.results[0]?.name.first || '' : ''}
+                        picture={parsedUserData?.results[0]?.picture?.medium || ''}
+                        email={parsedUserData?.results[0]?.email || ''}
                     />
+
+
                 </div>
 
                 <div className="p-4">{children}</div>
