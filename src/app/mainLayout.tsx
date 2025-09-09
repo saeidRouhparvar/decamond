@@ -3,7 +3,6 @@
 import React, { FC, PropsWithChildren, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
-import toast from 'react-hot-toast'
 import { Button } from './components/ui'
 import { burger } from './components/svg'
 import Modal from './components/Modal'
@@ -18,23 +17,28 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [closeModal, setCloseModal] = useState(false)
   const [parsedUserData, setParsedUserData] = useState<LoginResponseType | null>(null)
+  const [loading, setLoading] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
     const data = localStorage.getItem('userData')
-    if (data) {
-      setParsedUserData(JSON.parse(data) as LoginResponseType)
-    } else {
-      router.replace('/splash')
-      toast.error('Your Authentication is failed!!')
+
+    if (!data) {
+      router.replace('/login') 
+      return
     }
+
+    setParsedUserData(JSON.parse(data) as LoginResponseType)
+    setLoading(false)
   }, [router])
 
   const closeHandler = () => {
     localStorage.removeItem('userData')
-    router.replace('/splash')
+    router.replace('/login')
     setCloseModal(false)
   }
+
+  if (loading) return null
 
   const userName = parsedUserData
     ? `${parsedUserData.results[0]?.name.title || ''}. ${parsedUserData.results[0]?.name.first || ''} ${parsedUserData.results[0]?.name.last || ''}`
@@ -66,7 +70,6 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
             {burger}
           </div>
 
-          {/* UserData only renders on client */}
           {typeof window !== 'undefined' && (
             <UserData
               name={userName}
