@@ -41,11 +41,12 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   if (loading) return null
 
   const userName = parsedUserData
-    ? `${parsedUserData.results[0]?.name.title || ''}. ${parsedUserData.results[0]?.name.first || ''} ${parsedUserData.results[0]?.name.last || ''}`
+    ? `${parsedUserData.results[0]?.name.title || ''}. ${parsedUserData.results[0]?.name.first || ''} 
+    ${parsedUserData.results[0]?.name.last || ''}`
     : ''
   const userAlt = parsedUserData ? parsedUserData.results[0]?.name.first || '' : ''
   const userEmail = parsedUserData ? parsedUserData.results[0]?.email || '' : ''
-  const userPicture = parsedUserData ? parsedUserData.results[0]?.picture?.medium || '' : ''
+  const userPicture = parsedUserData ? parsedUserData.results[0]?.picture?.medium || '/avatar.png' : '/avatar.png'
 
   return (
     <div className="grid grid-cols-11">
