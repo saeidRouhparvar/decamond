@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import '../../public/IRANSansWeb/fonts.css';
 import { GlobalProvider } from "./GlobalProvider";
 
 
